@@ -139,6 +139,15 @@ type CodexHeaderDefaults struct {
 type XAIConfig struct {
 	// InjectXSearch injects xAI's native x_search tool when the request does not declare it.
 	InjectXSearch bool `yaml:"inject-x-search" json:"inject-x-search"`
+	// KeepForeignEncryptedContent skips the Grok-format encrypted_content
+	// sanitizer in the xAI Responses pipeline. Set it when the pipeline serves
+	// non-xAI upstreams (openai-compatibility providers or xai-api-key entries
+	// aimed at an OpenAI Responses-compatible gateway): their encrypted
+	// reasoning content is opaque to CPA and must be forwarded untouched so
+	// clients can replay it statelessly. Stripping it leaves a dangling
+	// reasoning item id the upstream rejects with "Referenced reasoning item
+	// ... was not found or has expired".
+	KeepForeignEncryptedContent bool `yaml:"keep-foreign-encrypted-content" json:"keep-foreign-encrypted-content"`
 }
 
 // DevinConfig configures provider-wide Devin request behavior.

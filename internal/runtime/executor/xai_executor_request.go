@@ -121,7 +121,9 @@ func (e *XAIExecutor) prepareResponsesRequestTo(ctx context.Context, req cliprox
 	body = normalizeXAIInputCustomToolCalls(body)
 	body = normalizeXAIInputNamespaceToolCallsWithFold(body, shouldFold)
 	body = normalizeXAIInputReasoningItems(body)
-	body = sanitizeXAIInputEncryptedContent(body)
+	if e.cfg == nil || !e.cfg.XAI.KeepForeignEncryptedContent {
+		body = sanitizeXAIInputEncryptedContent(body)
+	}
 	body = normalizeCodexInstructions(body)
 	body = sanitizeXAIResponsesBody(body, baseModel)
 	body = normalizeXAIImageRefs(body)

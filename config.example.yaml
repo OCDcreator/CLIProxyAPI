@@ -391,6 +391,12 @@ xai:
   # When true, inject the native x_search tool when the request does not declare it.
   # The injected tool is also added to tool_choice.allowed_tools when applicable.
   inject-x-search: false
+  # When true, forward encrypted reasoning content as-is instead of stripping
+  # entries that are not in xAI's Grok format. Enable when the Responses
+  # pipeline serves non-xAI upstreams (openai-compatibility providers or
+  # xai-api-key entries aimed at an OpenAI Responses-compatible gateway) so
+  # clients can replay their encrypted reasoning statelessly.
+  keep-foreign-encrypted-content: false
 
 # When true, enable authentication for the WebSocket API (/v1/ws).
 ws-auth: true
